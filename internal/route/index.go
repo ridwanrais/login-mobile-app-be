@@ -1,0 +1,19 @@
+package route
+
+import (
+	"github.com/gin-gonic/gin"
+	"github.com/ridwanrais/login-mobile-app/internal/controller"
+	// "github.com/ridwanrais/login-mobile-app/internal/route"
+)
+
+func SetupRoutes(router *gin.Engine) {
+	v1 := router.Group("/api/v1")
+
+	controller := controller.NewControllers()
+
+	{
+		SetupAccountsRoutes(v1, controller)
+		SetupHealthsRoutes(v1)
+		// ...
+	}
+}
