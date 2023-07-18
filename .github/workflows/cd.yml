@@ -1,0 +1,42 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: 1.20.6
+
+      - name: Build
+        run: go build -o login-mobile-app-be
+
+      - name: Archive
+        uses: actions/upload-artifact@v2
+        with:
+          name: login-mobile-app-be
+          path: login-mobile-app-be
+
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_PRIVATE_KEY }}
+          script: |
+            sudo systemctl stop login-mobile-app-be || true
+            sudo rm -rf /opt/login-mobile-app-be
+            sudo mkdir /opt/login-mobile-app-be
+            sudo chown -R $USER:$USER /opt/login-mobile-app-be
+            cp login-mobile-app-be /opt/login-mobile-app-be/
+            sudo systemctl start login-mobile-app-be
