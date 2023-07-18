@@ -69,4 +69,11 @@ jobs:
           script: |
             cd /opt/login-mobile-app-be/
             source .env
-            ./login-mobile-app-be
+            if ./login-mobile-app-be; then
+              echo "Binary executed successfully"
+              # Add your next steps here
+            else
+              echo "Binary execution failed"
+              # Handle the failure case or exit the workflow
+              exit 1
+            fi
