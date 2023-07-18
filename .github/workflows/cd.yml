@@ -58,5 +58,6 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           script: |
-            sudo systemctl stop login-mobile-app-be || true
-            sudo systemctl start login-mobile-app-be
+            # sudo systemctl stop login-mobile-app-be || true
+            # sudo systemctl start login-mobile-app-be
+            /opt/login-mobile-app-be/login-mobile-app-be
