@@ -27,6 +27,15 @@ jobs:
           name: login-mobile-app-be
           path: login-mobile-app-be
 
+      - name: Transfer to EC2
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_PRIVATE_KEY }}
+          source: login-mobile-app-be
+          target: /opt/login-mobile-app-be/
+
       - name: Deploy to EC2
         uses: appleboy/ssh-action@master
         with:
@@ -35,8 +44,4 @@ jobs:
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           script: |
             sudo systemctl stop login-mobile-app-be || true
-            sudo rm -rf /opt/login-mobile-app-be
-            sudo mkdir /opt/login-mobile-app-be
-            sudo chown -R $USER:$USER /opt/login-mobile-app-be
-            cp login-mobile-app-be /opt/login-mobile-app-be/
             sudo systemctl start login-mobile-app-be
