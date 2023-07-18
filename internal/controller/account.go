@@ -21,3 +21,22 @@ func (c *controllers) AddAccount(ctx *gin.Context) {
 		"accountID": accountID,
 	})
 }
+
+func (c *controllers) AccountVerificationCallback(ctx *gin.Context) {
+	id := ctx.Query("id")
+	if id == "" {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Verification ID is required"})
+		return
+	}
+
+	err := c.usecase.AccountVerificationCallback(ctx, id)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	ctx.JSON(http.StatusCreated, gin.H{
+		"message": "ok",
+		"accountID": "account is verified",
+	})
+}

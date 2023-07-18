@@ -13,6 +13,7 @@ type controllers struct {
 type Controllers interface {
 	// account
 	AddAccount(c *gin.Context)
+	AccountVerificationCallback(ctx *gin.Context)
 }
 
 func NewControllers() Controllers {

@@ -15,6 +15,7 @@ func SetupAccountsRoutes(router *gin.RouterGroup, controller controller.Controll
 		})
 		// accounts.GET("", ListAccounts)
 		accounts.POST("", controller.AddAccount)
+		accounts.GET("/verify", controller.AccountVerificationCallback)
 		// accounts.DELETE(":id", DeleteAccount)
 		// accounts.PATCH(":id", UpdateAccount)
 		// accounts.POST(":id/images", UploadAccountImage)

@@ -7,9 +7,9 @@ import (
 )
 
 func SetupRoutes(router *gin.Engine) {
-	v1 := router.Group("/api/v1")
-
 	controller := controller.NewControllers()
+	
+	v1 := router.Group("/api/v1")
 
 	{
 		SetupAccountsRoutes(v1, controller)
