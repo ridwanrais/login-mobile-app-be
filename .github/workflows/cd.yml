@@ -38,6 +38,7 @@ jobs:
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           script: |
             echo "BASE_URL=${{ secrets.BASE_URL }}" >> .env
+            echo "PORT=${{ secrets.PORT }}" >> .env
             echo "MONGO_CONNECTION_STRING=${{ secrets.MONGO_CONNECTION_STRING }}" >> .env
             echo "DATABASE_NAME=${{ secrets.DATABASE_NAME }}" >> .env
             echo "MAILJET_API_KEY=${{ secrets.MAILJET_API_KEY }}" >> .env
