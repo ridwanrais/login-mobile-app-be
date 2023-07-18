@@ -51,6 +51,21 @@ jobs:
           source: login-mobile-app-be
           target: /opt/login-mobile-app-be/
 
+      - name: Create .env file
+        run: |
+          echo "BASE_URL=${{ secrets.BASE_URL }}" >> .env
+          echo "MONGO_CONNECTION_STRING=${{ secrets.MONGO_CONNECTION_STRING }}" >> .env
+          echo "DATABASE_NAME=${{ secrets.DATABASE_NAME }}" >> .env
+          echo "MAILJET_API_KEY=${{ secrets.MAILJET_API_KEY }}" >> .env
+          echo "MAILJET_SECRET_KEY=${{ secrets.MAILJET_SECRET_KEY }}" >> .env
+          echo "MAILJET_SENDER_EMAIL=${{ secrets.MAILJET_SENDER_EMAIL }}" >> .env
+          echo "MAILJET_SENDER_NAME=${{ secrets.MAILJET_SENDER_NAME }}" >> .env
+          echo "ACCOUNT_VERIFICATION_KEY=${{ secrets.ACCOUNT_VERIFICATION_KEY }}" >> .env
+          echo "GOOGLE_PROJECT_ID=${{ secrets.GOOGLE_PROJECT_ID }}" >> .env
+          echo "GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}" >> .env
+          echo "GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}" >> .env
+          echo "OAUTH_STATE_STRING=${{ secrets.OAUTH_STATE_STRING }}" >> .env
+
       - name: Deploy to EC2
         uses: appleboy/ssh-action@master
         with:
