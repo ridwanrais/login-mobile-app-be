@@ -21,21 +21,19 @@ jobs:
           go-version: 1.20.6
 
       - name: Build
-        env:
-          BASE_URL: ${{ secrets.BASE_URL }}
-          MONGO_CONNECTION_STRING: ${{ secrets.MONGO_CONNECTION_STRING }}
-          DATABASE_NAME: ${{ secrets.DATABASE_NAME }}
-          MAILJET_API_KEY: ${{ secrets.MAILJET_API_KEY }}
-          MAILJET_SECRET_KEY: ${{ secrets.MAILJET_SECRET_KEY }}
-          MAILJET_SENDER_EMAIL: ${{ secrets.MAILJET_SENDER_EMAIL }}
-          MAILJET_SENDER_NAME: ${{ secrets.MAILJET_SENDER_NAME }}
-          ACCOUNT_VERIFICATION_KEY: ${{ secrets.ACCOUNT_VERIFICATION_KEY }}
-          GOOGLE_PROJECT_ID: ${{ secrets.GOOGLE_PROJECT_ID }}
-          GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
-          GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
-          OAUTH_STATE_STRING: ${{ secrets.OAUTH_STATE_STRING }}
         run: |
-          echo $DATABASE_NAME
+          env BASE_URL=${{ secrets.BASE_URL }}
+          env MONGO_CONNECTION_STRING=${{ secrets.MONGO_CONNECTION_STRING }}
+          env DATABASE_NAME=${{ secrets.DATABASE_NAME }}
+          env MAILJET_API_KEY=${{ secrets.MAILJET_API_KEY }}
+          env MAILJET_SECRET_KEY=${{ secrets.MAILJET_SECRET_KEY }}
+          env MAILJET_SENDER_EMAIL=${{ secrets.MAILJET_SENDER_EMAIL }}
+          env MAILJET_SENDER_NAME=${{ secrets.MAILJET_SENDER_NAME }}
+          env ACCOUNT_VERIFICATION_KEY=${{ secrets.ACCOUNT_VERIFICATION_KEY }}
+          env GOOGLE_PROJECT_ID=${{ secrets.GOOGLE_PROJECT_ID }}
+          env GOOGLE_CLIENT_ID=${{ secrets.GOOGLE_CLIENT_ID }}
+          env GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}
+          env OAUTH_STATE_STRING=${{ secrets.OAUTH_STATE_STRING }}
           go build -o login-mobile-app-be
 
       - name: Archive
