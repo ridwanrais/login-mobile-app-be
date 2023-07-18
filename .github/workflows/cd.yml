@@ -81,17 +81,3 @@ jobs:
 
             # Run the binary in the background
             nohup ./login-mobile-app-be > /dev/null 2>&1 &
-
-            # Wait for the process to complete
-            while ps -p $! >/dev/null; do sleep 1; done
-
-            # Check the exit code of the process
-            EXIT_CODE=$?
-            if [ ${EXIT_CODE} -eq 0 ]; then
-              echo "Binary executed successfully"
-              # Add your next steps here
-            else
-              echo "Binary execution failed with exit code ${EXIT_CODE}"
-              # Handle the failure case or exit the workflow
-              exit 1
-            fi
