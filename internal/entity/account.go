@@ -18,7 +18,6 @@ type Account struct {
 	UpdatedAt      time.Time          `bson:"updatedAt"`
 }
 
-// useless for now but may become useful later
 func NewAccount(account Account) Account {
 	return account
 }
