@@ -8,12 +8,14 @@ import (
 
 func SetupRoutes(router *gin.Engine) {
 	controller := controller.NewControllers()
-	
+
 	v1 := router.Group("/api/v1")
 
 	{
-		SetupAccountsRoutes(v1, controller)
 		SetupHealthsRoutes(v1)
+
+		SetupAccountsRoutes(v1, controller)
+		SetupAuthsRoutes(v1, controller)
 		// ...
 	}
 }

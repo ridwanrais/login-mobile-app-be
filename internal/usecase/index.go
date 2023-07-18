@@ -15,6 +15,9 @@ type Usecases interface {
 	// account
 	AddAccount(ctx context.Context, account entity.Account) (accountID string, err error)
 	AccountVerificationCallback(ctx context.Context, verificationID string) error
+
+	// auth
+	HandleGoogleLoginCallback(ctx context.Context, code string) (accountID string, err error)
 }
 
 func NewUsecases(r repository.Repositories) Usecases {

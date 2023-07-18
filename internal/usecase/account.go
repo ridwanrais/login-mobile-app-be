@@ -98,7 +98,7 @@ func (u *usecases) AccountVerificationCallback(ctx context.Context, verification
 		return errors.New("account has already been verified")
 	}
 
-	err = u.repo.UpdateAccount(ctx, entity.Account{
+	_, err = u.repo.UpdateAccount(ctx, entity.Account{
 		IsVerified: true,
 		MongoID:    account.MongoID,
 	})

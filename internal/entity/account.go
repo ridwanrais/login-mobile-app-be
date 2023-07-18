@@ -7,7 +7,7 @@ import (
 )
 
 type Account struct {
-	MongoID        primitive.ObjectID `bson:"_id" json:"-"`
+	MongoID        primitive.ObjectID `bson:"_id,omitempty" json:"-"`
 	Username       string             `bson:"username" validate:"required"`
 	Email          string             `bson:"email" validate:"required,email"`
 	Password       string             `bson:"password"`

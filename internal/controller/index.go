@@ -14,6 +14,10 @@ type Controllers interface {
 	// account
 	AddAccount(c *gin.Context)
 	AccountVerificationCallback(ctx *gin.Context)
+
+	// auth
+	HandleGoogleLogin(ctx *gin.Context)
+	HandleGoogleLoginCallback(ctx *gin.Context)
 }
 
 func NewControllers() Controllers {

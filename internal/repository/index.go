@@ -16,7 +16,7 @@ type Repositories interface {
 	AddAccount(ctx context.Context, account entity.Account) (accountID string, err error)
 	GetAccountByFields(ctx context.Context, fields map[string]interface{}) (account *entity.Account, err error)
 	GetAccountByID(ctx context.Context, id string) (account *entity.Account, err error)
-	UpdateAccount(ctx context.Context, account entity.Account) error
+	UpdateAccount(ctx context.Context, account entity.Account) (string, error)
 }
 
 func NewRepositories(d *mongo.Database) Repositories {

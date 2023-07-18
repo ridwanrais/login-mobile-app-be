@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"reflect"
+	"time"
 
 	"github.com/ridwanrais/login-mobile-app/internal/constants"
 	"github.com/ridwanrais/login-mobile-app/internal/entity"
@@ -15,6 +16,10 @@ import (
 
 func (r *repositories) AddAccount(ctx context.Context, account entity.Account) (accountID string, err error) {
 	coll := r.db.Collection(constants.COLLECTION_ACCOUNT)
+
+	now := time.Now()
+	account.CreatedAt = now
+	account.UpdatedAt = now
 
 	account = entity.NewAccount(account)
 	result, err := coll.InsertOne(ctx, account)
@@ -67,8 +72,11 @@ func (r *repositories) GetAccountByID(ctx context.Context, id string) (account *
 	return account, nil
 }
 
-func (r *repositories) UpdateAccount(ctx context.Context, account entity.Account) error {
+func (r *repositories) UpdateAccount(ctx context.Context, account entity.Account) (string, error) {
 	coll := r.db.Collection(constants.COLLECTION_ACCOUNT)
+
+	now := time.Now()
+	account.UpdatedAt = now
 
 	updateFields := bson.M{}
 	accountValue := reflect.ValueOf(account)
@@ -81,7 +89,10 @@ func (r *repositories) UpdateAccount(ctx context.Context, account entity.Account
 		// Check if the field is set and not empty
 		if fieldValue.IsValid() && !reflect.DeepEqual(fieldValue.Interface(), reflect.Zero(fieldType.Type).Interface()) {
 			fieldName := fieldType.Tag.Get("bson")
-			updateFields[fieldName] = fieldValue.Interface()
+
+			if fieldName != "_id,omitempty" {
+				updateFields[fieldName] = fieldValue.Interface()
+			}
 		}
 	}
 
@@ -93,8 +104,8 @@ func (r *repositories) UpdateAccount(ctx context.Context, account entity.Account
 
 	_, err := coll.UpdateOne(ctx, filter, update)
 	if err != nil {
-		return err
+		return "", err
 	}
 
-	return nil
+	return account.MongoID.Hex(), nil
 }
