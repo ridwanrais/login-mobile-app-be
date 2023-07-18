@@ -9,6 +9,20 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
+    env:
+      BASE_URL: ${{ env.BASE_URL }}
+      MONGO_CONNECTION_STRING: ${{ env.MONGO_CONNECTION_STRING }}
+      DATABASE_NAME: ${{ env.DATABASE_NAME }}
+      MAILJET_API_KEY: ${{ secrets.MAILJET_API_KEY }}
+      MAILJET_SECRET_KEY: ${{ secrets.MAILJET_SECRET_KEY }}
+      MAILJET_SENDER_EMAIL: ${{ secrets.MAILJET_SENDER_EMAIL }}
+      MAILJET_SENDER_NAME: ${{ secrets.MAILJET_SENDER_NAME }}
+      ACCOUNT_VERIFICATION_KEY: ${{ env.ACCOUNT_VERIFICATION_KEY }}
+      GOOGLE_PROJECT_ID: ${{ env.GOOGLE_PROJECT_ID }}
+      GOOGLE_CLIENT_ID: ${{ env.GOOGLE_CLIENT_ID }}
+      GOOGLE_CLIENT_SECRET: ${{ env.GOOGLE_CLIENT_SECRET }}
+      OAUTH_STATE_STRING: ${{ env.OAUTH_STATE_STRING }}
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
