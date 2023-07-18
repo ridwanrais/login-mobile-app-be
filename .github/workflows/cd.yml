@@ -67,4 +67,6 @@ jobs:
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           script: |
-            /opt/login-mobile-app-be/login-mobile-app-be
+            cd /opt/login-mobile-app-be/
+            source .env
+            ./login-mobile-app-be
