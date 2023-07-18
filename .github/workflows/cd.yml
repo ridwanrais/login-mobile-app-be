@@ -9,6 +9,8 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
 
+    environment: development
+
     env:
       BASE_URL: ${{ env.BASE_URL }}
       MONGO_CONNECTION_STRING: ${{ env.MONGO_CONNECTION_STRING }}
