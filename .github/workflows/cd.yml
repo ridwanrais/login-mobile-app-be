@@ -24,6 +24,7 @@ jobs:
       GOOGLE_CLIENT_ID: ${{ secrets.GOOGLE_CLIENT_ID }}
       GOOGLE_CLIENT_SECRET: ${{ secrets.GOOGLE_CLIENT_SECRET }}
       OAUTH_STATE_STRING: ${{ secrets.OAUTH_STATE_STRING }}
+      TEST_ERROR: ${{ secrets.TEST_ERROR }}
 
     steps:
       - name: Checkout code
