@@ -1,7 +1,9 @@
 package main
 
 import (
+	"fmt"
 	"log"
+	"os"
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
@@ -51,7 +53,9 @@ func main() {
 	route.SetupRoutes(r)
 
 	r.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
-	r.Run(":8080")
+
+	port := os.Getenv("PORT")
+	r.Run(fmt.Sprintf(":%s",port))
 }
 
 //...

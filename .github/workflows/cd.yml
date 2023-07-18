@@ -69,6 +69,15 @@ jobs:
           script: |
             cd /opt/login-mobile-app-be/
             source .env
+
+            # Stop the process running on port 8080
+            PORT=${{ secrets.PORT }}
+            PROCESS_ID=$(sudo lsof -t -i:${PORT})
+            if [ -n "${PROCESS_ID}" ]; then
+              echo "Stopping process running on port ${PORT}"
+              sudo kill ${PROCESS_ID}
+            fi
+
             if ./login-mobile-app-be; then
               echo "Binary executed successfully"
               # Add your next steps here
