@@ -31,17 +31,16 @@ jobs:
           path: login-mobile-app-be
 
       - name: Transfer to EC2
-        uses: appleboy/scp-action@master
-        with:
-          debug: true
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USERNAME }}
-          key: ${{ secrets.EC2_PRIVATE_KEY }}
-          source: login-mobile-app-be
-          target: /opt/login-mobile-app-be/
-          script: |
-            sudo mkdir -p /opt/login-mobile-app-be/
-            sudo tar -zxf login-mobile-app-be.tar.gz -C /opt/login-mobile-app-be/
+        run: |
+          scp -i ${{ secrets.EC2_PRIVATE_KEY }} -r login-mobile-app-be ${{ secrets.EC2_USERNAME }}@${{ secrets.EC2_HOST }}:/opt/login-mobile-app-be/
+        # uses: appleboy/scp-action@master
+        # with:
+        #   debug: true
+        #   host: ${{ secrets.EC2_HOST }}
+        #   username: ${{ secrets.EC2_USERNAME }}
+        #   key: ${{ secrets.EC2_PRIVATE_KEY }}
+        #   source: login-mobile-app-be
+        #   target: /opt/login-mobile-app-be/
 
       - name: Create .env file
         uses: appleboy/ssh-action@master
