@@ -39,6 +39,9 @@ jobs:
           key: ${{ secrets.EC2_PRIVATE_KEY }}
           source: login-mobile-app-be
           target: /opt/login-mobile-app-be/
+          script: |
+            sudo mkdir -p /opt/login-mobile-app-be/
+            sudo tar -zxf login-mobile-app-be.tar.gz -C /opt/login-mobile-app-be/
 
       - name: Create .env file
         uses: appleboy/ssh-action@master
