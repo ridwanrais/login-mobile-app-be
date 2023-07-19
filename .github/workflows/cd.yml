@@ -33,6 +33,7 @@ jobs:
       - name: Transfer to EC2
         uses: appleboy/scp-action@master
         with:
+          debug: true
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USERNAME }}
           key: ${{ secrets.EC2_PRIVATE_KEY }}
