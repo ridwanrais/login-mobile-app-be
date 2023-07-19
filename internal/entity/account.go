@@ -10,6 +10,7 @@ type Account struct {
 	MongoID        primitive.ObjectID `bson:"_id,omitempty" json:"-"`
 	Username       string             `bson:"username" validate:"required"`
 	Email          string             `bson:"email" validate:"required,email"`
+	PhoneNumber    int                `bson:"phoneNumber" json:"phone_number"`
 	Password       string             `bson:"password"`
 	ProfilePhoto   string             `bson:"profilePhoto"`
 	RegisterMethod string             `bson:"registerMethod"`

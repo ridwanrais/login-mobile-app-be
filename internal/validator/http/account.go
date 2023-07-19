@@ -1,8 +1,6 @@
 package validator
 
 import (
-	"net/http"
-
 	"github.com/gin-gonic/gin"
 	// "github.com/go-ozzo/ozzo-validation"
 	validation "github.com/go-ozzo/ozzo-validation/v4"
@@ -10,18 +8,16 @@ import (
 	"github.com/ridwanrais/login-mobile-app/internal/entity"
 )
 
-func AddAccountValidator(c *gin.Context) *entity.Account {
+func AddAccountValidator(c *gin.Context) (*entity.Account, error) {
 	var account entity.Account
 	if err := c.ShouldBind(&account); err != nil {
 		// Validation failed, handle the error
 		if verr, ok := err.(validation.Errors); ok {
 			// Validation errors occurred
-			c.JSON(http.StatusBadRequest, gin.H{"error": verr.Error()})
-			return nil
+			return nil, verr
 		}
 		// Other errors occurred
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Internal Server Error"})
-		return nil
+		return nil, err
 	}
 
 	if err := validation.ValidateStruct(&account,
@@ -30,9 +26,8 @@ func AddAccountValidator(c *gin.Context) *entity.Account {
 		validation.Field(&account.Password, validation.Required),
 	); err != nil {
 		// Validation failed, handle the error
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return nil
+		return nil, err
 	}
 
-	return &account
+	return &account, nil
 }

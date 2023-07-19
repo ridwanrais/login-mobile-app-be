@@ -24,6 +24,7 @@ func (u *usecases) AddAccount(ctx context.Context, account entity.Account) (acco
 		Email:          account.Email,
 		Password:       hashedPassword,
 		ProfilePhoto:   account.ProfilePhoto,
+		PhoneNumber:    account.PhoneNumber,
 		RegisterMethod: constants.MANUAL_REGISTER,
 		CreatedAt:      now,
 		UpdatedAt:      now,

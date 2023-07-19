@@ -8,8 +8,12 @@ import (
 )
 
 func (c *controllers) AddAccount(ctx *gin.Context) {
-	account := validator.AddAccountValidator(ctx)
-
+	account, err := validator.AddAccountValidator(ctx)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"validation error": err.Error()})
+		return
+	}
+	
 	accountID, err := c.usecase.AddAccount(ctx, *account)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
