@@ -30,6 +30,15 @@ jobs:
           name: login-mobile-app-be
           path: login-mobile-app-be
 
+      - name: Transfer to EC2
+        uses: appleboy/scp-action@master
+        with:
+          host: ${{ secrets.EC2_HOST }}
+          username: ${{ secrets.EC2_USERNAME }}
+          key: ${{ secrets.EC2_PRIVATE_KEY }}
+          source: login-mobile-app-be
+          target: /opt/login-mobile-app-be/
+
       - name: Create .env file
         uses: appleboy/ssh-action@master
         with:
@@ -51,15 +60,6 @@ jobs:
             echo "GOOGLE_CLIENT_SECRET=${{ secrets.GOOGLE_CLIENT_SECRET }}" >> .env
             echo "OAUTH_STATE_STRING=${{ secrets.OAUTH_STATE_STRING }}" >> .env
             sudo mv .env /opt/login-mobile-app-be/
-
-      - name: Transfer to EC2
-        uses: appleboy/scp-action@master
-        with:
-          host: ${{ secrets.EC2_HOST }}
-          username: ${{ secrets.EC2_USERNAME }}
-          key: ${{ secrets.EC2_PRIVATE_KEY }}
-          source: login-mobile-app-be
-          target: /opt/login-mobile-app-be/
 
       - name: Deploy to EC2
         uses: appleboy/ssh-action@master

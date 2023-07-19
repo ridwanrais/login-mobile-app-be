@@ -1,6 +1,6 @@
 .env
 docs/*
-login-mobile-app-be.pem
+*.pem
 steps.MD
 login-mobile-app-be
 test
