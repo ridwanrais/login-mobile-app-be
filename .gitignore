@@ -4,3 +4,7 @@ docs/*
 steps.MD
 login-mobile-app-be
 test
+
+# air
+.air.toml
+tmp/*
