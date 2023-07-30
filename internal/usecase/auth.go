@@ -76,13 +76,20 @@ func (u *usecases) HandleGoogleLoginCallback(ctx context.Context, code string) (
 }
 
 func (u *usecases) Login(ctx context.Context, payload entity.Account) (*entity.JwtToken, error) {
+	account := &entity.Account{}
 
-	account, err := u.repo.GetAccountByFields(ctx, map[string]interface{}{
-		"email": payload.Email,
-	})
-	if err != nil {
-		log.Fatalf("Failed to retrieve user info: %v", err)
-		return nil, err
+	if payload.Email != "" {
+		account, _ = u.repo.GetAccountByFields(ctx, map[string]interface{}{
+			"email": payload.Email,
+		})
+	} else {
+		account, _ = u.repo.GetAccountByFields(ctx, map[string]interface{}{
+			"username": payload.Username,
+		})
+	}
+	
+	if account == nil {
+		return nil, errors.New("account not found")
 	}
 
 	isCorrectPassword := utils.CheckPasswordHash(payload.Password, account.Password)
