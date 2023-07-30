@@ -6,8 +6,8 @@ import (
 )
 
 func SetupHealthsRoutes(router *gin.RouterGroup) {
-	accounts := router.Group("/health")
+	health := router.Group("/health")
 	{
-		accounts.GET("", controller.GetHealth)
+		health.GET("", controller.GetHealth)
 	}
 }

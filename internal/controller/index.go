@@ -18,6 +18,7 @@ type Controllers interface {
 	// auth
 	HandleGoogleLogin(ctx *gin.Context)
 	HandleGoogleLoginCallback(ctx *gin.Context)
+	Login(ctx *gin.Context)
 }
 
 func NewControllers() Controllers {

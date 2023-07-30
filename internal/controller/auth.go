@@ -6,6 +6,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/ridwanrais/login-mobile-app/internal/constants"
+	validator "github.com/ridwanrais/login-mobile-app/internal/validator/http"
 )
 
 func (c *controllers) HandleGoogleLogin(ctx *gin.Context) {
@@ -32,5 +33,24 @@ func (c *controllers) HandleGoogleLoginCallback(ctx *gin.Context) {
 	ctx.JSON(http.StatusCreated, gin.H{
 		"message":   "ok",
 		"accountID": accountID,
+	})
+}
+
+func (c *controllers) Login(ctx *gin.Context) {
+	account, err := validator.LoginValidator(ctx)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"validation error": err.Error()})
+		return
+	}
+
+	data, err := c.usecase.Login(ctx, *account)
+	if err != nil {
+		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, gin.H{
+		"message": "ok",
+		"data":    data,
 	})
 }
