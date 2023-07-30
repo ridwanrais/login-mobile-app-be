@@ -6,9 +6,10 @@ import (
 )
 
 func SetupAuthsRoutes(router *gin.RouterGroup, controller controller.Controllers) {
-	accounts := router.Group("/auth")
+	auth := router.Group("/auth")
 	{
-		accounts.GET("/google/login", controller.HandleGoogleLogin)
-		accounts.GET("/google/callback", controller.HandleGoogleLoginCallback)
+		auth.GET("/google/login", controller.HandleGoogleLogin)
+		auth.GET("/google/callback", controller.HandleGoogleLoginCallback)
+		auth.POST("/login", controller.Login)
 	}
 }
