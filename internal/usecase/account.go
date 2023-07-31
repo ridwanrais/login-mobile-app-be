@@ -46,7 +46,7 @@ func (u *usecases) AddAccount(ctx context.Context, account entity.Account) (acco
 	}
 
 	go func() {
-		err = SendAccountVerificationEmail(accountID, account.Email)
+		err = SendAccountVerificationEmail(accountID, account.Email, account.VerifyUrl)
 		if err != nil {
 			log.Fatalln(err)
 		}
@@ -55,14 +55,14 @@ func (u *usecases) AddAccount(ctx context.Context, account entity.Account) (acco
 	return accountID, nil
 }
 
-func SendAccountVerificationEmail(accountID string, recipientEmail string) error {
+func SendAccountVerificationEmail(accountID string, recipientEmail string, verifyUrl string) error {
 	keyByte := []byte(os.Getenv("ACCOUNT_VERIFICATION_KEY"))
 	verificationID, err := utils.EncryptString(keyByte, accountID)
 	if err != nil {
 		return err
 	}
 
-	verificationUrl := utils.GenerateEmailVerificationUrl(verificationID)
+	verificationUrl := utils.GenerateEmailVerificationUrlV2(verifyUrl, verificationID)
 
 	recipientName := utils.GetEmailName(recipientEmail)
 	htmlContent, err := utils.GenerateVerificationEmailHtml(recipientName, verificationUrl)

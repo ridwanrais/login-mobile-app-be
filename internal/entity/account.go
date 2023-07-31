@@ -17,6 +17,8 @@ type Account struct {
 	IsVerified     bool               `bson:"isVerified"`
 	CreatedAt      time.Time          `bson:"createdAt"`
 	UpdatedAt      time.Time          `bson:"updatedAt"`
+
+	VerifyUrl string `bson:"-" json:"verifyUrl,omitempty"`
 }
 
 func NewAccount(account Account) Account {
