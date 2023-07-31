@@ -13,7 +13,7 @@ type usecases struct {
 
 type Usecases interface {
 	// account
-	AddAccount(ctx context.Context, account entity.Account) (accountID string, err error)
+	AddAccount(ctx context.Context, account entity.Account, verifyUrl string) (accountID string, err error) 
 	AccountVerificationCallback(ctx context.Context, verificationID string) error
 
 	// auth

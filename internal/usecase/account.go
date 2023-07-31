@@ -14,7 +14,7 @@ import (
 	"github.com/ridwanrais/login-mobile-app/internal/utils"
 )
 
-func (u *usecases) AddAccount(ctx context.Context, account entity.Account) (accountID string, err error) {
+func (u *usecases) AddAccount(ctx context.Context, account entity.Account, verifyUrl string) (accountID string, err error) {
 	hashedPassword, _ := utils.HashPassword(account.Password)
 
 	now := time.Now()
@@ -46,7 +46,7 @@ func (u *usecases) AddAccount(ctx context.Context, account entity.Account) (acco
 	}
 
 	go func() {
-		err = SendAccountVerificationEmail(accountID, account.Email, account.VerifyUrl)
+		err = SendAccountVerificationEmail(accountID, account.Email, verifyUrl)
 		if err != nil {
 			log.Fatalln(err)
 		}
