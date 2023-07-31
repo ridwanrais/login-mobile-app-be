@@ -28,3 +28,21 @@ func GenerateEmailVerificationUrl(verificationID string) string {
 
 	return verificationURL
 }
+
+func GenerateEmailVerificationUrlV2(verifyUrl, verificationID string) string {	// Create a URL object and set the base URL
+	u, err := url.Parse(verifyUrl)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	// Set the query parameters for the verification URL
+	q := u.Query()
+	q.Set("id", verificationID)
+	u.RawQuery = q.Encode()
+
+	verificationURL := u.String()
+
+	fmt.Println("Verification URL:", verificationURL)
+
+	return verificationURL
+}
