@@ -2,10 +2,12 @@ package usecase
 
 import (
 	"context"
+	"errors"
 	"log"
 
 	"github.com/ridwanrais/login-mobile-app/internal/constants"
 	"github.com/ridwanrais/login-mobile-app/internal/entity"
+	"github.com/ridwanrais/login-mobile-app/internal/utils"
 
 	// "golang.org/x/oauth2"
 
@@ -71,4 +73,35 @@ func (u *usecases) HandleGoogleLoginCallback(ctx context.Context, code string) (
 
 		return accountID, nil
 	}
+}
+
+func (u *usecases) Login(ctx context.Context, payload entity.Account) (*entity.JwtToken, error) {
+	account := &entity.Account{}
+
+	if payload.Email != "" {
+		account, _ = u.repo.GetAccountByFields(ctx, map[string]interface{}{
+			"email": payload.Email,
+		})
+	} else {
+		account, _ = u.repo.GetAccountByFields(ctx, map[string]interface{}{
+			"username": payload.Username,
+		})
+	}
+	
+	if account == nil {
+		return nil, errors.New("account not found")
+	}
+
+	isCorrectPassword := utils.CheckPasswordHash(payload.Password, account.Password)
+	if !isCorrectPassword {
+		return nil, errors.New("Incorrect password")
+	}
+
+	// Generate the JWT token
+	token, err := utils.GenerateJWTToken(account.MongoID.String())
+	if err != nil {
+		return nil, err
+	}
+
+	return token, nil
 }

@@ -18,6 +18,7 @@ type Usecases interface {
 
 	// auth
 	HandleGoogleLoginCallback(ctx context.Context, code string) (accountID string, err error)
+	Login(ctx context.Context, payload entity.Account) (*entity.JwtToken, error)
 }
 
 func NewUsecases(r repository.Repositories) Usecases {
