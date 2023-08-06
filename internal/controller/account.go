@@ -22,7 +22,7 @@ func (c *controllers) AddAccount(ctx *gin.Context) {
 		ctx.JSON(http.StatusBadRequest, gin.H{"validation error": err.Error()})
 		return
 	}
-	
+
 	accountID, err := c.usecase.AddAccount(ctx, *account, verifyUrl)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
@@ -30,26 +30,26 @@ func (c *controllers) AddAccount(ctx *gin.Context) {
 	}
 
 	ctx.JSON(http.StatusCreated, gin.H{
-		"message": "ok",
+		"message":   "ok",
 		"accountID": accountID,
 	})
 }
 
 func (c *controllers) AccountVerificationCallback(ctx *gin.Context) {
-	id := ctx.Query("id")
-	if id == "" {
+	verificationID := ctx.Query("id")
+	if verificationID == "" {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Verification ID is required"})
 		return
 	}
 
-	err := c.usecase.AccountVerificationCallback(ctx, id)
+	err := c.usecase.AccountVerificationCallback(ctx, verificationID)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 
 	ctx.JSON(http.StatusCreated, gin.H{
-		"message": "ok",
+		"message":   "ok",
 		"accountID": "account is verified",
 	})
 }
