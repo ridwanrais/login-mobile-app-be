@@ -36,13 +36,13 @@ func (c *controllers) AddAccount(ctx *gin.Context) {
 }
 
 func (c *controllers) AccountVerificationCallback(ctx *gin.Context) {
-	id := ctx.Query("id")
-	if id == "" {
+	verificationID := ctx.Param("id")
+	if verificationID == "" {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": "Verification ID is required"})
 		return
 	}
 
-	err := c.usecase.AccountVerificationCallback(ctx, id)
+	err := c.usecase.AccountVerificationCallback(ctx, verificationID)
 	if err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return

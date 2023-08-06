@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/url"
 	"os"
+	"path"
 )
 
 func GenerateEmailVerificationUrl(verificationID string) string {
@@ -29,16 +30,14 @@ func GenerateEmailVerificationUrl(verificationID string) string {
 	return verificationURL
 }
 
-func GenerateEmailVerificationUrlV2(verifyUrl, verificationID string) string {	// Create a URL object and set the base URL
+func GenerateEmailVerificationUrlV2(verifyUrl, verificationID string) string { // Create a URL object and set the base URL
 	u, err := url.Parse(verifyUrl)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	// Set the query parameters for the verification URL
-	q := u.Query()
-	q.Set("id", verificationID)
-	u.RawQuery = q.Encode()
+	// Append the verification ID as a path segment
+	u.Path = path.Join(u.Path, verificationID)
 
 	verificationURL := u.String()
 
